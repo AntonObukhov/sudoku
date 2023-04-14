@@ -2,6 +2,8 @@ const { log } = require("console");
 const fs = require("fs");
 const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
+
+// делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
 function createArrFromText(boardString) {
   let sudokuArr1 = boardString.slice(0, 81).split("");
   let res = [];
@@ -23,7 +25,7 @@ function createArrFromText(boardString) {
   return res;
 }
 
-// Функция замены пустых значений и получения координат пуст значений
+// Функция получения координат пуст значений
 function checkEmpty() {
   let arrOfCoord = [];
   let sudokuFromText = createArrFromText(boardString);
@@ -49,10 +51,9 @@ function changeChars() {
       }
     }
   }
+
   return sudokuFromText;
 }
-
-console.log(changeChars());
 
 // получаем ранд.число от 1-9
 function randomInteger(min, max) {
@@ -65,12 +66,30 @@ function randomInteger(min, max) {
  * Возвращает булевое значение — решено это игровое поле или нет.
  */
 function isSolved(sudokuFromText, arrOfCoord) {
+  let setListCheck;
   // i это строка из измененной доски, идем по строкам
-  for (let i = 0; i < sudokuFromText.length; i += 1) {
-    //j - номер столбца, идем по столбцам измененной доски
-    for (let j = 0; j < sudokuFromText[i].length; j++) {}
+  let stop = 0;
+  while (stop === 0) {
+    for (let i = 0; i < sudokuFromText.length; i += 1) {
+      //j - номер столбца, идем по столбцам измененной доски
+      setListCheck = new Set(sudokuFromText[i]);
+      if (setListCheck.size < 9) {
+        // вызвать функцию которая заменяет значения в строке
+        for (let j = 0; j < arrOfCoord.length; j++){
+          if (arrOfCoord[j][0] === [i]){
+            console.log(sudocuFromText[i][arrOfCoord[j][1]] = randomInteger());
+          }
+          
+        }
+        
+      } else {
+        stop = 1;
+        return 1;
+      }
+    }
   }
 }
+console.log(isSolved(changeChars(), checkEmpty()));
 
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
