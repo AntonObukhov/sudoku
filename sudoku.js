@@ -1,11 +1,10 @@
-const { log } = require("console");
-const fs = require("fs");
-const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
-
+const { log } = require('console');
+const fs = require('fs');
+const boardString = fs.readFileSync('./puzzles.txt', 'utf-8');
 
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
 function createArrFromText(boardString) {
-  let sudokuArr1 = boardString.slice(0, 81).split("");
+  let sudokuArr1 = boardString.slice(0, 81).split('');
   let res = [];
   for (let i = 0; i < sudokuArr1.length; i++) {
     if (i % 8 === 0 && i != 0) {
@@ -28,10 +27,10 @@ function createArrFromText(boardString) {
 // Функция получения координат пуст значений
 function checkEmpty() {
   let arrOfCoord = [];
-  let sudokuFromText = createArrFromText(boardString);
-  for (let i = 0; i < sudokuFromText.length; i++) {
-    for (let j = 0; j < sudokuFromText[i].length; j++) {
-      if (sudokuFromText[i][j] === "-") {
+  let sudocuFromText = createArrFromText(boardString);
+  for (let i = 0; i < sudocuFromText.length; i++) {
+    for (let j = 0; j < sudocuFromText[i].length; j++) {
+      if (sudocuFromText[i][j] === '-') {
         arrOfCoord.push([i, j]);
       }
     }
@@ -43,17 +42,55 @@ function checkEmpty() {
 
 // Функция замена значений
 function changeChars() {
-  let sudokuFromText = createArrFromText(boardString);
-  for (let i = 0; i < sudokuFromText.length; i++) {
-    for (let j = 0; j < sudokuFromText[i].length; j++) {
-      if (sudokuFromText[i][j] === "-") {
-        sudokuFromText[i][j] = randomInteger().toString();
+  let sudoсuFromText = createArrFromText(boardString);
+  for (let i = 0; i < sudoсuFromText.length; i++) {
+    for (let j = 0; j < sudoсuFromText[i].length; j++) {
+      if (sudoсuFromText[i][j] === '-') {
+        sudoсuFromText[i][j] = randomInteger();
+        // проверка полученного значения на повтор в строке
+        /*  function checkInRow() {
+          for (let a = 0; a < sudocuFromText[i].length; a++) {
+            if (sudocuFromText[i][j] != sudocuFromText[i][a]) {
+              sudocuFromText[i][j];
+            } else {
+              sudocuFromText[i][j] = randomInteger().toString();
+              checkInRow();
+            }
+          }
+          return sudocuFromText[i][j];
+        }
+        checkInRow(); */
+        // for (let a = 0; a < sudocuFromText[i].length; a++){
+        //   if(sudocuFromText[i][j] = sudocuFromText[i][a]){
+
+        //   }
+        // }
       }
     }
   }
-
-  return sudokuFromText;
+  return sudoсuFromText;
 }
+
+function ChkDsk (arr, num){
+  arr[num] = randomInteger()
+  let setArr = new Set(arr)
+if(setArr < 9){
+  chkDsk()
+} else return arr[num]
+}
+// Строка с разными числами
+/* function diffNumsInRow() {
+  let arrOfSudocu = changeChars();
+  let firstRow = arrOfSudocu[0];
+  console.log(firstRow);
+  for (let i = 0; i < firstRow.length; i++) {
+    if (!isNaN(firstRow[i])) {
+      if firstRow.in firstRow[i]
+    }
+    
+  }
+}
+console.log(diffNumsInRow()); */
 
 // получаем ранд.число от 1-9
 function randomInteger(min, max) {
@@ -61,35 +98,41 @@ function randomInteger(min, max) {
   return Math.round(rand);
 }
 
+// проверка рандомного числа
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
  * Возвращает булевое значение — решено это игровое поле или нет.
  */
-function isSolved(sudokuFromText, arrOfCoord) {
+let sudocuFromText = changeChars();
+let arrOfCoord = checkEmpty();
+
+function isSolved(sudocuFromText, arrOfCoord) {
   let setListCheck;
   // i это строка из измененной доски, идем по строкам
   let stop = 0;
   while (stop === 0) {
-    for (let i = 0; i < sudokuFromText.length; i += 1) {
+    for (let i = 0; i < sudocuFromText.length; i += 1) {
       //j - номер столбца, идем по столбцам измененной доски
-      setListCheck = new Set(sudokuFromText[i]);
+      setListCheck = new Set(sudocuFromText[i]);
       if (setListCheck.size < 9) {
         // вызвать функцию которая заменяет значения в строке
-        for (let j = 0; j < arrOfCoord.length; j++){
-          if (arrOfCoord[j][0] === [i]){
-            console.log(sudocuFromText[i][arrOfCoord[j][1]] = randomInteger());
+        for (let j = 0; j < arrOfCoord.length; j++) {
+          if (arrOfCoord[j][0] == i) {
+            let a = arrOfCoord[j][1];
+            sudocuFromText[i][a] = randomInteger().toString();
           }
-          
         }
-        
       } else {
         stop = 1;
-        return 1;
+        s;
+        return sudocuFromText;
       }
     }
   }
 }
-console.log(isSolved(changeChars(), checkEmpty()));
+
+// console.log(checkEmpty());
+// console.log(isSolved(sudocuFromText, arrOfCoord));
 
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
