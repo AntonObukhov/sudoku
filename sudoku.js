@@ -1,35 +1,31 @@
-const { log } = require('console');
-const fs = require('fs');
-const boardString = fs.readFileSync('./puzzles.txt', 'utf-8');
-
-
+const { log } = require("console");
+const fs = require("fs");
+const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
 
 function createArrFromText() {
   const sudocu = () => {
-    const suNum = Number(process.argv[2]) || 1
-  const suSt = boardString.split('\n').filter((el)=> el !== '')
+    const suNum = Number(process.argv[2]) || 1;
+    const suSt = boardString.split("\n").filter((el) => el !== "");
 
-    if(suNum>0 && suNum <16){
-      console.log(`Решаем пазл № ${suNum}`)
-      return suSt[suNum - 1]
+    if (suNum > 0 && suNum < 16) {
+      console.log(`Решаем пазл № ${suNum}`);
+      return suSt[suNum - 1];
     } else {
-      return 'Сами придумывайте'
+      return "Сами придумывайте";
     }
+  };
 
+  const sudo = sudocu();
+  if (sudo.length < 20) {
+    return console.log(sudocu());
   }
-
-  const sudo = sudocu()
-  if (sudo.length<20){
-    return console.log(sudocu())
-  }
-  let sudocuArr1 = sudo.split('');
+  let sudocuArr1 = sudo.split("");
   let res = [];
   for (let i = 0; i < sudocuArr1.length; i += 9) {
     res.push(sudocuArr1.slice(i, i + 9));
   }
-  console.log(res)
   return res;
 }
 
@@ -39,13 +35,12 @@ function createArrFromText() {
  * Договорись со своей командой, в каком формате возвращать этот результат - в формате массива
  */
 function solveSudocu(board) {
-
   // возвращает координату пустого значения, если его нет возвращает null
   function checkEmpty() {
     // let sudocuFromText = board;
     for (let r = 0; r < board.length; r++) {
-      for (let c = 0; c < boardString[r].length; c++) {
-        if (board[r][c] === '-') {
+      for (let c = 0; c < board[r].length; c++) {
+        if (board[r][c] === "-") {
           return [r, c];
         }
       }
@@ -53,15 +48,15 @@ function solveSudocu(board) {
     return null;
   }
 
-  const isValid = (num, pos, boards) => {
+  const isValid = (num, pos, board) => {
     const [r, c] = pos;
     for (let i = 0; i < 9; i++) {
-      if (boards[i][c] === num && r !== i) {
+      if (board[i][c] === num && r !== i) {
         return false;
       }
     }
     for (let i = 0; i < 9; i++) {
-      if (boards[r][i] === num && c !== i) {
+      if (board[r][i] === num && c !== i) {
         return false;
       }
     }
@@ -71,7 +66,7 @@ function solveSudocu(board) {
 
     for (let a = boxRow; a < boxRow + 3; a++) {
       for (let z = boxCol; z < boxCol + 3; z++) {
-        if (num === boards[a][z] && r !== a && c !== z) {
+        if (num === board[a][z] && r !== a) {
           return false;
         }
       }
@@ -79,9 +74,9 @@ function solveSudocu(board) {
     return true;
   };
 
-  function solve(boards) {
+  function solve() {
     // **currNumPosit позиция пустого элемента
-    const currNumPosit = checkEmpty(board);
+    const currNumPosit = checkEmpty();
     // когда возвращает true и рекурсия заканчивается
     if (currNumPosit === null) {
       return true;
@@ -92,19 +87,19 @@ function solveSudocu(board) {
       const valid = isValid(currNumber, currNumPosit, board);
       if (valid) {
         const [x, y] = currNumPosit;
-        boards[x][y] = currNumber;
+        board[x][y] = currNumber;
+
+        if (solve()) {
+          return true;
+        }
+        board[x][y] = "-";
       }
-      if (solve()) {
-        return true;
-      }
-      boards[x][y] = '-';
     }
     return false;
   }
-  solve(board);
+  solve();
   return board;
 }
-
 
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
@@ -112,9 +107,9 @@ function solveSudocu(board) {
  */
 
 function prettyBoard(board) {
-  let result = '';
+  let result = "";
   for (let i = 0; i < board.length; i++) {
-    result += board[i].join('  ') + ' \n';
+    result += board[i].join("  ") + " \n";
   }
   return result;
 }
@@ -123,12 +118,6 @@ function prettyBoard(board) {
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
   createArrFromText,
-  // solve,
   prettyBoard,
-  isValid,
-  sudocu,
-  createArrFromText,
-  // checkEmpty,
-  // isValid,
   solveSudocu,
 };

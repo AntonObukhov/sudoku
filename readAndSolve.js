@@ -1,7 +1,9 @@
 // Подключить функции из файла sudoku.js.
-const sudoku = require('./sudoku.js');
-// const { solve, prettyBoard, sudocu, createArrFromText, checkEmpty, isValid } = require('./sudoku.js');
-// console.log(prettyBoard);
+const sudoku = require("./sudoku.js");
+
+const { prettyBoard, createArrFromText, solveSudocu } = require("./sudoku.js");
+
+console.log(prettyBoard(solveSudocu(createArrFromText())));
 
 /* function readAndSolve(error, fileData) {
   // Если чтение файла не удалось, выбросить ошибку с описанием проблемы и
@@ -39,20 +41,19 @@ const sudoku = require('./sudoku.js');
 //   ['4', '3', '-', '-', '2', '-', '5', '-', '1'],
 //   ['6', '-', '-', '3', '-', '8', '9', '-', '-'],
 // ];
-const solvedPuzzle = sudoku.solveSudocu(puzzle);
 
-  // Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
-  if (!sudoku.isValid(solvedPuzzle)) {
-    console.log(`Не смогли решить судоку №${puzzleNumber} :(`, '\n');
-    return; // Если судоку не решён, завершить работу этой функции.
-  }
+/* // Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
+if (!sudoku.isValid(solvedPuzzle)) {
+  console.log(`Не смогли решить судоку №${puzzleNumber} :(`, "\n");
+  return; // Если судоку не решён, завершить работу этой функции.
+}
 
 // Код ниже сработает, только если проверка решения судоку прошла успешно.
 console.log(`Судоку №${puzzleNumber} решён успешно!`);
 
 // Использовать функцию prettyBoard из файла sudoku.js для форматирования
 // игрового поля в строку в желаемом формате.
-console.log(sudoku.prettyBoard(solvedPuzzle), '\n');
+console.log(sudoku.prettyBoard(solvedPuzzle), "\n");
 /* } */
 
-module.exports = readAndSolve;
+
