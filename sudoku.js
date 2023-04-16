@@ -40,7 +40,6 @@ function checkEmpty(board) {
   return null;
 }
 // console.log(checkEmpty(board));
-let coordinatesOfEmpty = checkEmpty(board);
 
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt. ---> у нас принимает массив board
@@ -49,28 +48,28 @@ let coordinatesOfEmpty = checkEmpty(board);
  */
 
 function solve(board) {
-  // когда возвращает false и рекурсия заканчивается
-  if (coordinatesOfEmpty === null){
-    return false;
-  } 
-
-  if (solve()){
-    // **currNumPosit позиция пустого элемента
-    let currNumPosit = coordinatesOfEmpty;
-    // начинаем подставлять числа от 1 до 9
-    for (let i = 1; i <= 9; i++) {
-      
-      // board.currNumPosit = i;
-      if (isValid){
-        //ЗДЕСЬ НЕПРАВИЛЬНО ПРИСВОИЛА КООРДИНАТУ ИЗМЕНЯЕМОГО ЧИСЛА(деструктуризация)
-        board.currNumPosit = i;
-      }
-      
-      
-    }
+  // **currNumPosit позиция пустого элемента
+  let currNumPosit = checkEmpty(board);
+  // когда возвращает true и рекурсия заканчивается
+  if (currNumPosit === null) {
+    return true;
   }
-  
-  return true;
+
+  // начинаем подставлять числа от 1 до 9
+  for (let i = 1; i <= 9; i++) {
+    //присваиваем пустой позиции число от 1 до 9
+    const currNumber = i.toString();
+    const valid = isValid(currNumber, currNumPosit, board);
+    if (valid) {
+      const [x, y] = currNumPosit;
+      board[x][y] = currNumber;
+    }
+    if (solve()) {
+      return true;
+    }
+    board[x][y] = '-';
+  }
+  return false;
 }
 // return board;
 /**
@@ -79,22 +78,18 @@ function solve(board) {
  * Подумай, как симпатичнее сформировать эту строку.
  */
 
-
- function prettyBoard(board) {
-   let result = "";
-   for (let i = 0; i < board.length; i++) {
-     result += board[i].join("  ") + " \n";
-   }
+function prettyBoard(board) {
+  let result = '';
+  for (let i = 0; i < board.length; i++) {
+    result += board[i].join('  ') + ' \n';
+  }
   return result;
- }
+}
 //  console.log(prettyBoard(board));
-
- 
-
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
   solve,
   isSolved,
-   prettyBoard,
+  prettyBoard,
 };
