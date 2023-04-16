@@ -41,11 +41,11 @@ const sudoku = require('./sudoku.js');
 // ];
 const solvedPuzzle = sudoku.solveSudocu(puzzle);
 
-// Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
-// if (!sudoku.isSolved(solvedPuzzle)) {
-//   console.log(`Не смогли решить судоку №${puzzleNumber} :(`, '\n');
-//   return; // Если судоку не решён, завершить работу этой функции.
-// }
+  // Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
+  if (!sudoku.isValid(solvedPuzzle)) {
+    console.log(`Не смогли решить судоку №${puzzleNumber} :(`, '\n');
+    return; // Если судоку не решён, завершить работу этой функции.
+  }
 
 // Код ниже сработает, только если проверка решения судоку прошла успешно.
 console.log(`Судоку №${puzzleNumber} решён успешно!`);

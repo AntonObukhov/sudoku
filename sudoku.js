@@ -10,16 +10,16 @@ function createArrFromText() {
   const sudocu = () => {
     const suNum = Number(process.argv[2]) || 1
   const suSt = boardString.split('\n').filter((el)=> el !== '')
-  
+
     if(suNum>0 && suNum <16){
       console.log(`Решаем пазл № ${suNum}`)
       return suSt[suNum - 1]
     } else {
       return 'Сами придумывайте'
     }
-    
+
   }
-  
+
   const sudo = sudocu()
   if (sudo.length<20){
     return console.log(sudocu())
@@ -125,6 +125,7 @@ module.exports = {
   createArrFromText,
   // solve,
   prettyBoard,
+  isValid,
   sudocu,
   createArrFromText,
   // checkEmpty,
