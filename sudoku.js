@@ -78,11 +78,23 @@ function solve(board) {
  * Возвращает строку с игровым полем для последующего вывода в консоль.
  * Подумай, как симпатичнее сформировать эту строку.
  */
-function prettyBoard(board) {}
+
+
+ function prettyBoard(board) {
+   let result = "";
+   for (let i = 0; i < board.length; i++) {
+     result += board[i].join("  ") + " \n";
+   }
+  return result;
+ }
+//  console.log(prettyBoard(board));
+
+ 
+
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
   solve,
   isSolved,
-  prettyBoard,
+   prettyBoard,
 };
