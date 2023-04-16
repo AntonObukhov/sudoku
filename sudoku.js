@@ -3,6 +3,10 @@ const fs = require("fs");
 const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 
+// делает массив из текстового файла судоку, только первый!!!!!!!!!!!(пока)
+function createArrFromText(boardString) {
+  let sudokuArr1 = boardString.slice(0, 81).split("");
+
 const suNum = Number(process.argv[2]) || 1
 const suSt = boardString.split('\n').filter((el)=> el !== '')
 const sudocu = (num, sud) => {
@@ -22,15 +26,22 @@ function createArrFromText(sudocu) {
   }
   let sudocuArr1 = sudocu().split('');
 
+
   let res = [];
   for (let i = 0; i < sudocuArr1.length; i+=9) {
     res.push(sudocuArr1.slice(i,i+9))
   }
   return res;
 }
+
+
+// присваиваем полученному массиву имя переменной board
+let board = createArrFromText(boardString);
+
+
 // возвращает координату пустого значения, если его нет возвращает null
-function checkEmpty() {
-  let sudocuFromText = createArrFromText(boardString);
+function checkEmpty(board) {
+  let sudocuFromText = board;
   for (let r = 0; r < sudocuFromText.length; r++) {
     for (let c = 0; c < sudocuFromText[r].length; c++) {
       if (sudocuFromText[r][c] === "-") {
@@ -68,18 +79,36 @@ const isValid = (num, pos, board) => {
 };
 
 /**
- * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
+ * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt. ---> у нас принимает массив board
  * Возвращает игровое поле после попытки его решить.
- * Договорись со своей командой, в каком формате возвращать этот результат.
+ * Договорись со своей командой, в каком формате возвращать этот результат - в формате массива
  */
-function solve(boardString) {}
 
-/**
- * Принимает игровое поле в том формате, в котором его вернули из функции solve.
- * Возвращает булевое значение — решено это игровое поле или нет.
- */
-function isSolved(board) {}
+function solve(board) {
+  // **currNumPosit позиция пустого элемента
+  let currNumPosit = checkEmpty(board);
+  // когда возвращает true и рекурсия заканчивается
+  if (currNumPosit === null) {
+    return true;
+  }
 
+  // начинаем подставлять числа от 1 до 9
+  for (let i = 1; i <= 9; i++) {
+    //присваиваем пустой позиции число от 1 до 9
+    const currNumber = i.toString();
+    const valid = isValid(currNumber, currNumPosit, board);
+    if (valid) {
+      const [x, y] = currNumPosit;
+      board[x][y] = currNumber;
+    }
+    if (solve()) {
+      return true;
+    }
+    board[x][y] = '-';
+  }
+  return false;
+}
+// return board;
 /**
  * Принимает игровое поле в том формате, в котором его вернули из функции solve.
  * Возвращает строку с игровым полем для последующего вывода в консоль.
@@ -87,13 +116,13 @@ function isSolved(board) {}
  */
 
 function prettyBoard(board) {
-  let result = "";
+  let result = '';
   for (let i = 0; i < board.length; i++) {
-    result += board[i].join("  ") + " \n";
+    result += board[i].join('  ') + ' \n';
   }
   return result;
 }
-console.log(prettyBoard(board));
+//  console.log(prettyBoard(board));
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
