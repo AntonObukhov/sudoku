@@ -3,13 +3,10 @@ const fs = require("fs");
 const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 
-// делает массив из текстового файла судоку, только первый!!!!!!!!!!!(пока)
-function createArrFromText(boardString) {
-  let sudokuArr1 = boardString.slice(0, 81).split("");
 
-const suNum = Number(process.argv[2]) || 1
-const suSt = boardString.split('\n').filter((el)=> el !== '')
 const sudocu = (num, sud) => {
+  const suNum = Number(process.argv[2]) || 1
+const suSt = boardString.split('\n').filter((el)=> el !== '')
   if(suNum>0 && suNum <17){
     return suSt[suNum - 1]
   } else {
