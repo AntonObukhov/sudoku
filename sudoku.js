@@ -2,28 +2,30 @@ const { log } = require('console');
 const fs = require('fs');
 const boardString = fs.readFileSync('./puzzles.txt', 'utf-8');
 
+
+const suNum = Number(process.argv[2]) || 1
+const suSt = boardString.split('\n').filter((el)=> el !== '')
+const sudocu = (num, sud) => {
+  if(suNum>0 && suNum <17){
+    return suSt[suNum - 1]
+  } else {
+    return 'Сами придумывайте'
+  }
+}
+
+
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
-function createArrFromText(boardString) {
-  let sudokuArr1 = boardString.slice(0, 81).split('');
+function createArrFromText(sudocu) {
+  if (sudocu().length<20){
+    return sudocu()
+  }
+  let sudocuArr1 = sudocu().split('');
   let res = [];
-  for (let i = 0; i < sudokuArr1.length; i++) {
-    if (i % 8 === 0 && i != 0) {
-      res.push([
-        sudokuArr1[i - 8],
-        sudokuArr1[i - 7],
-        sudokuArr1[i - 6],
-        sudokuArr1[i - 5],
-        sudokuArr1[i - 4],
-        sudokuArr1[i - 3],
-        sudokuArr1[i - 2],
-        sudokuArr1[i - 1],
-        sudokuArr1[i - 0],
-      ]);
-    }
+  for (let i = 0; i < sudocuArr1.length; i+=9) {
+    res.push(sudocuArr1.slice(i,i+9))
   }
   return res;
 }
-
 // возвращает координату пустого значения, если его нет возвращает null
 function checkEmpty() {
   let sudocuFromText = createArrFromText(boardString);
@@ -54,6 +56,6 @@ function prettyBoard(board) {}
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
   solve,
-  isSolved,
+  // isSolved,
   prettyBoard,
 };
