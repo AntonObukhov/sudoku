@@ -14,22 +14,24 @@ function createArrFromText() {
   const suSt = boardString.split('\n').filter((el)=> el !== '')
   
     if(suNum>0 && suNum <16){
+      console.log(`Решаем пазл № ${suNum}`)
       return suSt[suNum - 1]
     } else {
       return 'Сами придумывайте'
     }
+    
   }
+  
   const sudo = sudocu()
-  if (sudo.length<50){
-    return sudocu()
+  if (sudo.length<20){
+    return console.log(sudocu())
   }
   let sudocuArr1 = sudo.split('');
-
-
   let res = [];
   for (let i = 0; i < sudocuArr1.length; i+=9) {
     res.push(sudocuArr1.slice(i,i+9))
   }
+  console.log(res)
   return res;
 }
 
@@ -124,6 +126,7 @@ function prettyBoard(board) {
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
+  createArrFromText,
   solve,
   // isSolved,
   prettyBoard,
