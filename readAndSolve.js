@@ -1,6 +1,7 @@
 // Подключить функции из файла sudoku.js.
 const sudoku = require('./sudoku');
 
+
 function readAndSolve(error, fileData) {
   // Если чтение файла не удалось, выбросить ошибку с описанием проблемы и
   // завершить работу функции.
@@ -30,7 +31,7 @@ function readAndSolve(error, fileData) {
   const solvedPuzzle = sudoku.solve(puzzle);
 
   // Использовать функцию isSolved из файла sudoku.js для проверки решения судоку.
-  if (!sudoku.isSolved(solvedPuzzle)) {
+  if (!sudoku.isValid(solvedPuzzle)) {
     console.log(`Не смогли решить судоку №${puzzleNumber} :(`, '\n');
     return; // Если судоку не решён, завершить работу этой функции.
   }

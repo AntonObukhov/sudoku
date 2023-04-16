@@ -7,15 +7,16 @@ const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 function createArrFromText(boardString) {
   let sudokuArr1 = boardString.slice(0, 81).split("");
 
-const suNum = Number(process.argv[2]) || 1
-const suSt = boardString.split('\n').filter((el)=> el !== '')
-const sudocu = (num, sud) => {
-  if(suNum>0 && suNum <17){
-    return suSt[suNum - 1]
-  } else {
-    return 'Сами придумывайте'
+  const suNum = Number(process.argv[2]) || 1
+  const suSt = boardString.split('\n').filter((el) => el !== '')
+  const sudocu = (num, sud) => {
+    if (suNum > 0 && suNum < 17) {
+      return suSt[suNum - 1]
+    } else {
+      return 'Сами придумывайте'
+    }
   }
-}
+}4
 
 
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
@@ -127,6 +128,6 @@ function prettyBoard(board) {
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
   solve,
-  // isSolved,
   prettyBoard,
+  isValid,
 };
