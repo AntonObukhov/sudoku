@@ -3,38 +3,37 @@ const fs = require("fs");
 const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 
-// делает массив из текстового файла судоку, только первый!!!!!!!!!!!(пока)
-function createArrFromText(boardString) {
-  let sudokuArr1 = boardString.slice(0, 81).split("");
 
-  const suNum = Number(process.argv[2]) || 1
-  const suSt = boardString.split('\n').filter((el) => el !== '')
-  const sudocu = (num, sud) => {
-    if (suNum > 0 && suNum < 17) {
-      return suSt[suNum - 1]
-    } else {
-      return 'Сами придумывайте'
-    }
-  }
-}4
 
 
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
 
-function createArrFromText(sudocu) {
-  if (sudocu().length<20){
-    return sudocu()
+function createArrFromText() {
+  const sudocu = () => {
+    const suNum = Number(process.argv[2]) || 1
+  const suSt = boardString.split('\n').filter((el)=> el !== '')
+
+    if(suNum>0 && suNum <16){
+      console.log(`Решаем пазл № ${suNum}`)
+      return suSt[suNum - 1]
+    } else {
+      return 'Сами придумывайте'
+    }
+
   }
-  let sudocuArr1 = sudocu().split('');
 
-
+  const sudo = sudocu()
+  if (sudo.length<20){
+    return console.log(sudocu())
+  }
+  let sudocuArr1 = sudo.split('');
   let res = [];
   for (let i = 0; i < sudocuArr1.length; i+=9) {
     res.push(sudocuArr1.slice(i,i+9))
   }
+  console.log(res)
   return res;
 }
-
 
 // присваиваем полученному массиву имя переменной board
 let board = createArrFromText(boardString);
@@ -127,6 +126,7 @@ function prettyBoard(board) {
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
 module.exports = {
+  createArrFromText,
   solve,
   prettyBoard,
   isValid,
