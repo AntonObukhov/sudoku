@@ -37,6 +37,21 @@ function checkEmpty() {
   return null;
 }
 
+
+const isValid = (num, currpos, board) => {
+  const [r, c] = position;
+  for (let i = 0; i < size; i++) {
+    if (board[i][c] === num && r!= i) {
+   return false
+    }
+
+       if (board[r][i] === num && c!= i) {
+   return false
+    }
+
+   }
+}
+
 /**
  * Принимает игровое поле в формате строки — как в файле sudoku-puzzles.txt.
  * Возвращает игровое поле после попытки его решить.
