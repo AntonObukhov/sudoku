@@ -4,24 +4,26 @@ const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 
 
-const sudocu = (num, sud) => {
-  const suNum = Number(process.argv[2]) || 1
-const suSt = boardString.split('\n').filter((el)=> el !== '')
-  if(suNum>0 && suNum <17){
-    return suSt[suNum - 1]
-  } else {
-    return 'Сами придумывайте'
-  }
-}
 
 
 // делает массив из текстового файла судоку, только первый!!!!!!!!!!!1
 
-function createArrFromText(sudocu) {
-  if (sudocu().length<20){
+function createArrFromText() {
+  const sudocu = () => {
+    const suNum = Number(process.argv[2]) || 1
+  const suSt = boardString.split('\n').filter((el)=> el !== '')
+  
+    if(suNum>0 && suNum <16){
+      return suSt[suNum - 1]
+    } else {
+      return 'Сами придумывайте'
+    }
+  }
+  const sudo = sudocu()
+  if (sudo.length<50){
     return sudocu()
   }
-  let sudocuArr1 = sudocu().split('');
+  let sudocuArr1 = sudo.split('');
 
 
   let res = [];
@@ -30,7 +32,6 @@ function createArrFromText(sudocu) {
   }
   return res;
 }
-
 
 // присваиваем полученному массиву имя переменной board
 let board = createArrFromText(boardString);
