@@ -1,7 +1,5 @@
-const { rejects } = require("assert");
 const fs = require("fs");
-const util = require('util')
-const { resolve } = require("path");
+const util = require("util");
 const boardString = fs.readFileSync("./puzzles.txt", "utf-8");
 
 //Делает массив из текстового файла 'puzzles.txt'. Пример запуска: node имя_файла "число" (число - это номер судоку которое мы хотим вырбать).
@@ -157,16 +155,17 @@ function animate(result) {
     "\n",
   ];
   let i = 0;
-  return new Promise((resolve, reject) => {
-    const output = setInterval(() => {
-      process.stdout.write(util.format("\x1b[31m%s\x1b[0m", letters[i % letters.length]));
-      i++;
-      if (i === letters.length) {
-        clearInterval(output);
-        result();
-      }
-    }, 1000);
-  });
+
+  const output = setInterval(() => {
+    process.stdout.write(
+      util.format("\x1b[31m%s\x1b[0m", letters[i % letters.length])
+    );
+    i++;
+    if (i === letters.length) {
+      clearInterval(output);
+      result();
+    }
+  }, 1000);
 }
 
 // Экспортировать функции для использования в другом файле (например, readAndSolve.js).
